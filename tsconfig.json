@@ -15,9 +15,11 @@
     "jsx": "preserve",
     "incremental": true,
     "paths": {
-      "@/*": ["./src/*"]
-    }
+      "@/*": ["./src/*"],
+      "@/pubilc/*": ["./public/*"]
+    },
+    
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/styles/header.jsx", "src/component/redux/features/switchContent.js"],
   "exclude": ["node_modules"]
 }
