@@ -7,12 +7,13 @@ export const GlobalStyle = createGlobalStyle`
 }
 html {
   box-sizing: border-box;
+  font-size:3.5vw;
 }
 body{
     margin:0;
     padding:0;
     background-color:#333333;
-    padding-top: ${(props) => props.theme.headerHeight};
+    padding: ${(props) => props.theme.headerHeight} 0 ${(props) => props.theme.footerHeight};
 }
 
 `;

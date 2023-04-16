@@ -1,9 +1,11 @@
 import Post from "@/component/post";
+
 import styled from "styled-components";
 const Element = ({className} : {className:string})=>{
     return(
         <section id="post" className={className}>
             <Post/>
+           
         </section>
     )
 }

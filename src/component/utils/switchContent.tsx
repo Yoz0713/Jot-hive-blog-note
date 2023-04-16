@@ -51,7 +51,7 @@ const Element = ({ className }:{className:string}) => {
     list-style:none;
     width:25%;
     height:100%;
-    font-size:4vw;
+    font-size:${(props)=>props.theme.sFontSize};
     letter-spacing:0.25em;
     font-weight:600;
     

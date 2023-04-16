@@ -3,17 +3,22 @@ import Image from "next/image";
 const Element = ({className,src} : {className:string,src:string})=>{
     return(
         <section className={className}>
-            <Image src={src} alt="banner-image" width={480} height={360}/>
+            <Image src={src} alt="banner-image" width={480} height={360} loading="eager"/>
         </section>
     )
 }
 
 const StyledElement = styled(Element)`
+    position:absolute;
+    left:0;
+    top:0;
     width:100%;
+    height:100%;
     img{
         width:100%;
-        height:65vw;
+        height:100%;
         object-fit:cover;
+        filter:brightness(0.55)
     }
   `;
   
