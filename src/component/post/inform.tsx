@@ -6,7 +6,7 @@ import ProfileName from "../profile/name";
 
 const PostTitle = ()=>{
     return(
-        <h1>以'MERN'stack實作社群平台-環境設置</h1>
+        <h1>以MERN stack實作社群平台-環境設置</h1>
     )
 }
 
