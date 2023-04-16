@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import Image from "next/image";
 
-const iconSize=32;
+const iconSize=28;
 const Home = ()=>{
     return(
         <section className="home-btn">

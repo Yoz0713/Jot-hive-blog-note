@@ -9,6 +9,7 @@ import { Provider } from 'react-redux';
 import {store} from "../component/redux/store"
 export default function App({ Component, pageProps }: AppProps) {
   return(
+    <>
     <Theme theme={darkTheme}>
       <GlobalStyle/>
     <Provider store={store}>
@@ -20,9 +21,8 @@ export default function App({ Component, pageProps }: AppProps) {
       <Footer />
     </div>
     </Provider>
-   
-  
-    
     </Theme>
+    </>
+   
   )
 }

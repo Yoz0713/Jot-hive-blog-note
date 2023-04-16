@@ -11,7 +11,8 @@ html {
 body{
     margin:0;
     padding:0;
-    background-color:#333333
+    background-color:#333333;
+    padding-top: ${(props) => props.theme.headerHeight};
 }
 
 `;

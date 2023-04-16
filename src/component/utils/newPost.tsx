@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import Image from "next/image";
-const Element = ({ className }:{className:string}) => {
+
+const Element = ({ className }:{className?:string}) => {
     return (
         <section id="add-post-btn" className={className}>
             <Image src="/svg/footer-note-icon.svg" alt={"Post"} width={40} height={40}/>
