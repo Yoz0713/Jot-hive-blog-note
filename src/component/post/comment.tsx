@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import Image from "next/image";
 import ProfileName from "../profile/name";
+import { SmallTitle } from "./smallTitle";
 interface commentInterface {
     className:string,
     src:string,
@@ -17,8 +18,7 @@ const CommentElement = ({className,src,name,message}:commentInterface)=>{
                 <div className="imgBox">
                 <Image src={src} alt={src} width={480} height={280} loading="eager"/>
                 </div>
-           
-            <ProfileName name={name}/>
+                <ProfileName name={name}/>
             </div>
             <div className="comment-message">
                 <p>{message.text}</p>
@@ -29,6 +29,9 @@ const CommentElement = ({className,src,name,message}:commentInterface)=>{
     )
 }
 const Comment = styled(CommentElement)`
+border:1px solid #ccc;
+padding:3.5vw 2vw;
+border-radius:10px;
         .comment-profile{
             display:flex;
             align-items:center;
@@ -100,6 +103,11 @@ const Element = ({className} : {className:string})=>{
     }]
     return(
         <section className={className}>
+            <div className="box">
+                <SmallTitle>留言區</SmallTitle>
+                <SmallTitle>{data.length}comments</SmallTitle>
+            </div>
+           
                 {data.map((item,i)=>{
                     return(
                         <Comment className="comment" src={item.img} name={item.name} key={item.id} message={item.message}/>
@@ -111,15 +119,25 @@ const Element = ({className} : {className:string})=>{
 
 const StyledElement = styled(Element)`
     width:90%;
-    margin:0 auto;
-    padding:10vw 0;
+    margin:5vw auto 10vw;
+    padding:5vw 2.5%;
+    border-radius:5px;
+    background-color:${(props)=>props.theme.background};
+    .box{
+        display:flex;
+        justify-content:space-between;
+    }
     & > :not(:last-child){
         margin-bottom:6.5vw;
     }
   `;
-  
+
   export default function PostComment ():JSX.Element{
       return(
-          <StyledElement className="post-comment" />
+        <>
+            
+           <StyledElement className="post-comment" />
+        </>
+       
       )
   }

@@ -41,7 +41,6 @@ const Element = ({ className }:{className:string}) => {
   margin:0 auto;
   height:100%;
   align-items:center;
-  border-bottom:1px solid #ccc;
   color: ${(props) => props.theme.color};
   li{
     display:flex;

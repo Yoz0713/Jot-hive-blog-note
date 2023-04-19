@@ -20,6 +20,7 @@ const StyledHeader = styled(Element)`
   height: ${(props) => props.theme.headerHeight};
   background-color: ${(props) => props.theme.background};
   color: ${(props) => props.theme.color};
+  z-index:30;
 `;
 
 export default function Header ():JSX.Element{

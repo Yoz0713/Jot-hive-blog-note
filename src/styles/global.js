@@ -12,7 +12,7 @@ html {
 body{
     margin:0;
     padding:0;
-    background-color:#333333;
+    background-color:#222222;
     padding: ${(props) => props.theme.headerHeight} 0 ${(props) => props.theme.footerHeight};
 }
 
