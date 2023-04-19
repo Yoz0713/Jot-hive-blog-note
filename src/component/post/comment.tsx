@@ -118,9 +118,9 @@ const Element = ({className} : {className:string})=>{
 }
 
 const StyledElement = styled(Element)`
-    width:90%;
-    margin:5vw auto 10vw;
-    padding:5vw 2.5%;
+    width:100%;
+    margin:5vw auto 0vw;
+    padding:10vw 5%;
     border-radius:5px;
     background-color:${(props)=>props.theme.background};
     .box{

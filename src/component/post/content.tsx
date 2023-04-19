@@ -12,7 +12,7 @@ const Element = ({className} : {className:string})=>{
 }
 
 const StyledElement = styled(Element)`
-    width:90%;
+    width:100%;
     margin:5vw auto 0;
     padding:5vw 5%;
     border-radius:5px;
