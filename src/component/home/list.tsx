@@ -9,7 +9,11 @@ interface listData {
         url:string,
         classify:string,
         para:string,
-        img:string
+        img:string,
+        author:{
+            photo:string,
+            name:string,
+        }
     }
 }
 
@@ -19,6 +23,14 @@ const ListElement = ({className,data}:listData)=>{
         <div className={className} onClick={()=>router.push(data.url)} >
                 <div className="classify">
                     <p>{data.classify}</p>
+                </div>
+                <div className="post-author">
+                    <div className="author-photo">
+                    <Image  src={data.author.photo}  alt="title-image" width={36} height={36}/>
+                    </div>
+                    <div className="author-name">
+                        <p>{data.author.name}</p>
+                    </div>
                 </div>
                 <div className="title">
                     <p>{data.title}</p>
@@ -45,6 +57,29 @@ const StyledList =styled(ListElement)`
             letter-spacing:0.1em;
         }
 
+      }
+      .post-author{
+            display:flex;
+            align-items:center;
+            margin:2vw 0;
+            .author-photo{
+                width:8vw;
+                height:8vw;
+                border-radius:50%;
+                border:1px solid #ccc;
+                margin-right:1.6vw;
+                img{
+                    width:100%;
+                    height:100%;
+                    object-cover:cover;
+                    object-position:center center;
+                }
+            }
+            .author-name{
+                font-size:${(props)=>props.theme.sFontSize};
+                color:#fff;
+                letter-spacing:0.05em;
+            }
       }
       .title{
         width:80%;

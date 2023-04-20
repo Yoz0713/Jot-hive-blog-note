@@ -9,20 +9,26 @@ const Element = ({ className }:{className:string}) => {
     const handleClick = ()=>{
         router.push("/")
     }
-    const [follow , setFollow] = useState(false)
+    const [follow , setFollow] = useState(false);
+    const data={
+        owner:true,
+    }
     return (
         <section id="post-header" className={className}>
                      <Image src="/svg/header-back-icon.svg" alt="back" width={iconSize} height={iconSize} onClick={handleClick}/>
-            <div className="box">
-            <Image src="/svg/header-share-icon.svg" alt="share" width={iconSize} height={iconSize}/>
-            <div className="follow-area" onClick={()=>setFollow(!follow)}>
-            <FollowStar follow={follow}/>
-            </div>
-          
-          
-            </div>
-   
-            
+                     {router.pathname == "/post" &&
+                         <div className="box">
+                            <Image src="/svg/header-share-icon.svg" alt="share" width={iconSize} height={iconSize}/>
+                          
+                            <div className="follow-area" onClick={()=>setFollow(!follow)}>
+                                {data.owner ?
+                                <Image src="/svg/header-edit-icon.svg" alt="edit" width={iconSize} height={iconSize}/>
+                                :
+                                <FollowStar follow={follow}/>
+                                }
+                            </div>
+                         </div>
+                     }
     </section>
     );
   };
@@ -52,7 +58,7 @@ const Element = ({ className }:{className:string}) => {
   }
 `;
 
-export default function PostHeader(){
+export default function FunctionHeader(){
     return(
        <StyledElement className="post-header"/>
     )

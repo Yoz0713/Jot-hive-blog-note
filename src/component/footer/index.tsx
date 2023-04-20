@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import AddNewPost from "../utils/newPost";
+import AddNewPost from "../utils/postButton";
 import FunctionNav from "../utils/functionNav";
 const Element = ({ className }:{className:string}) => {
     return (

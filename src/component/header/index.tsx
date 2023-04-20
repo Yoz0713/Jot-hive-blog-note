@@ -1,13 +1,13 @@
 import { useRouter } from "next/router";
 import styled from "styled-components";
 import SwitchMainContent from "../utils/switchContent";
-import PostHeader from "../utils/postHeader";
+import FunctionHeader from "../utils/functionHeader";
 const Element = ({ className }:{className:string}) => {
   const router = useRouter()
  
   return (
     <section id="header" className={className}>
-      {router.pathname === "/" ? <SwitchMainContent/> :<PostHeader/>}
+      {router.pathname === "/" ? <SwitchMainContent/> :<FunctionHeader/>}
     </section>
   );
 };
