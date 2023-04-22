@@ -1,9 +1,9 @@
-
+import NewPostConatiner from "@/component/utils/newPost";
 import styled from "styled-components";
 const Element = ({className} : {className:string})=>{
     return(
         <section id="edit" className={className}>
-   
+            <NewPostConatiner/>
            
         </section>
     )

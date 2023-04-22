@@ -13,7 +13,7 @@ const Element = ({className} : {className:string})=>{
 
 const StyledElement = styled(Element)`
     width:100%;
-    margin:5vw auto 0;
+    margin:0 auto;
     padding:5vw 5%;
     border-radius:5px;
     background-color:${(props)=>props.theme.background};

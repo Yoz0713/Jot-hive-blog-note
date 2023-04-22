@@ -16,11 +16,15 @@ const Element = ({ className }:{className?:string}) => {
   left:0;
   right:0;
   margin:0 auto;
-  top:-11vw;
+  top:-9vw;
   padding:1.5vw;
   background-color:#fff;
   border:4px solid ${props=>props.theme.border};
   border-radius:50%;
+  img{
+    width:8.5vw;
+    height:8.5vw;
+  }
 `;
 
 export default function AddNewPost(){

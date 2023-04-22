@@ -67,7 +67,7 @@ border-radius:10px;
            
         }
   `;
-const Element = ({className} : {className:string})=>{
+const CommentWrapper = ({className} : {className:string})=>{
     const data = [{
         img:"/webp/jotHive-logo.webp",
         name:"Daniel Yu",
@@ -117,7 +117,7 @@ const Element = ({className} : {className:string})=>{
     )
 }
 
-const StyledElement = styled(Element)`
+const StyledElement = styled(CommentWrapper)`
     width:100%;
     margin:5vw auto 0vw;
     padding:10vw 5%;
