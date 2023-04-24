@@ -25,7 +25,6 @@ type Props = {
                 tools: PARA_TOOLS,
                 placeholder:"輸入您的內文...",
                 data,
-                defaultBlock:"header",
                 async onChange(api, event) {
                   const data = await api.saver.save();
                   onChange(data);

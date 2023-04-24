@@ -2,14 +2,21 @@ import styled from "styled-components";
 import Image from "next/image";
 import ProfileName from "../profile/name";
 import { SmallTitle } from "./smallTitle";
+import LeaveComment from "../utils/leaveComment";
+import { useState } from "react";
 interface commentInterface {
     className:string,
     src:string,
     name:string,
-    message:{
+    message?:{
         text:string,
         date:string
     }
+}
+interface newCommentInterface {
+    className:string,
+    src:string,
+    name:string,
 }
 const CommentElement = ({className,src,name,message}:commentInterface)=>{
     return(
@@ -20,22 +27,27 @@ const CommentElement = ({className,src,name,message}:commentInterface)=>{
                 </div>
                 <ProfileName name={name}/>
             </div>
+            {message ? 
             <div className="comment-message">
                 <p>{message.text}</p>
                 <span>{message.date}</span>
-            </div>
+            </div>:
+                <LeaveComment/>
+            }
         </section>
       
     )
 }
+
+
 const Comment = styled(CommentElement)`
-border:1px solid #ccc;
-padding:3.5vw 2vw;
-border-radius:10px;
+        border:1px solid #ccc;
+        padding:3.5vw 2vw;
+        border-radius:10px;
         .comment-profile{
             display:flex;
             align-items:center;
-            margin-bottom:1.5vw;
+            margin-bottom:2vw;
             .imgBox{
                 display:flex;
                 justify-content:center;
@@ -44,7 +56,7 @@ border-radius:10px;
                 border-radius:50%;
                 width:9vw;
                 height:9vw;
-                margin-right:3.5vw;
+                margin-right:2vw;
                 img{
                     width:8vw;
                     height:auto;
@@ -67,7 +79,13 @@ border-radius:10px;
            
         }
   `;
+
 const CommentWrapper = ({className} : {className:string})=>{
+    const user = {
+        img:"/webp/jotHive-logo.webp",
+        username:"游閔暘",
+
+    }
     const data = [{
         img:"/webp/jotHive-logo.webp",
         name:"Daniel Yu",
@@ -101,12 +119,27 @@ const CommentWrapper = ({className} : {className:string})=>{
             date:"2023/04/17 10:42"
         }
     }]
+    const [newComment,setNewComment] =useState(false)
     return(
         <section className={className}>
             <div className="box">
                 <SmallTitle>留言區</SmallTitle>
                 <SmallTitle>{data.length}comments</SmallTitle>
             </div>
+            <div className="leave-comment-container">
+                {newComment ?  
+                <>
+                  <Comment className="leave-comment" src={user.img} name={user.username}/>
+                    <div className="close" onClick={()=>setNewComment(false)}></div>
+                </>
+              
+                
+                : 
+                <div className="addComment" onClick={()=>setNewComment(true)}>Add Comment</div>
+                }
+               
+            </div>
+               
            
                 {data.map((item,i)=>{
                     return(
@@ -127,6 +160,52 @@ const StyledElement = styled(CommentWrapper)`
         display:flex;
         justify-content:space-between;
     }
+    .leave-comment-container{
+        position:relative;
+        .close{
+            position:absolute;
+            width:5vw;
+            height:5vw;
+            right:5vw;
+            top:6vw;
+            transform:rotate(45deg);
+            &::after,&::before{
+                position:absolute;
+                display:block;
+                content:"";
+                background-color:${(props)=>props.theme.color};
+            }
+            &::after{
+                width:1px;
+                height:100%;
+                left:0;
+                right:0;
+                margin:0 auto;
+                bottom:0;
+            }
+            &::before{
+                width:100%;
+                height:1px;
+                top:0;
+                left:0;
+                margin:auto 0;
+                bottom:0;
+            }
+        }
+        .addComment{
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            width:100%;
+            height:100%;
+            border:1px solid #fff;
+            padding:2vw 0;
+            font-size:${(props)=>props.theme.sFontSize};
+            color:${(props)=>props.theme.color};
+            letter-spacing:0.05em;
+        }
+    }
+    
     & > :not(:last-child){
         margin-bottom:6.5vw;
     }
