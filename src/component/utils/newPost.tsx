@@ -16,7 +16,7 @@ const NewPostWrapperElement = ({className}:{className:string})=>{
     const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         // 將編輯器數據作為請求主體中的一個屬性發送到後端
-        fetch("http://localhost:3030/newPost", {
+        fetch("http://localhost:3030/post", {
           method: "POST",
           body: JSON.stringify({
             image:JSON.stringify(image),
