@@ -1,10 +1,19 @@
 import styled from "styled-components";
 import Image from "next/image";
+import { checkLogin } from "../lib/checkLogin";
 import { useRouter } from "next/router";
 const Element = ({ className }:{className?:string}) => {
-    const router = useRouter()
+  const router = useRouter();
+    const handleCheckLogin =async ()=>{
+      let isLoggedIn = await checkLogin()
+      if(isLoggedIn){
+          router.push("/newPost")
+      }else{
+        router.push("/login")
+      }
+    } 
     return (
-        <section id="add-post-btn" className={className} onClick={()=>router.push("/newPost")}>
+        <section id="add-post-btn" className={className} onClick={handleCheckLogin}>
             <Image src="/svg/footer-note-icon.svg" alt={"Post"} width={40} height={40}/>
         </section>
     );

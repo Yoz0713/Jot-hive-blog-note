@@ -26,6 +26,7 @@ const NewPostWrapperElement = ({className}:{className:string})=>{
           headers: {
             "Content-Type": "application/json",
           },
+          mode:"cors"
         })
           .then((response) => response.json())
           .then((data) => {

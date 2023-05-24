@@ -1,7 +1,8 @@
 import styled from "styled-components";
 import ListItem from "./list";
-
-
+import { useEffect } from "react";
+import { getAllPost } from "../lib/getPost";
+import { GetServerSidePropsContext } from 'next';
 
 const listElement = ({className}:{className:string})=>{
     const data = [{
@@ -137,6 +138,11 @@ const listElement = ({className}:{className:string})=>{
             name:"作者暱稱"
         }
     },]
+    useEffect(()=>{
+       getAllPost().then((data)=>{
+        console.log(data)
+       })
+    },[])
     return(
         <div className={className} >
                 {data.map((item,i)=>{
@@ -165,3 +171,31 @@ export default function List(){
        <StyledList className="list"/>
     )
 }
+
+
+// export const getServerSideProps = async (context: GetServerSidePropsContext) => {
+
+  
+//     const post = await getAllPost();
+  
+//     return {
+//       props: {
+//         className: 'post', // 這裡可以指定你要的 class 名稱
+//         post: JSON.parse(JSON.stringify(post)),
+//       },
+//     };
+//   };
+  
+//   interface PostType{
+//       category: String,
+//       userID: String,
+//       createdAt: Date,
+//       data: {
+//         banner: String,
+//         title: String,
+//         paragraph:[{
+//           type: {type: String},
+//           text: {type: String}
+//         }],
+//       },
+//     }

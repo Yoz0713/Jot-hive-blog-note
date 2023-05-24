@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { useRouter } from "next/router";
 import Image from "next/image";
+
 interface listData {
     className?:string,
     data:{
@@ -19,6 +20,8 @@ interface listData {
 
 const ListElement = ({className,data}:listData)=>{
     const router =useRouter()
+  
+   
     return(
         <div className={className} onClick={()=>router.push(data.url)} >
                 <div className="classify">
@@ -116,3 +119,6 @@ export default function ListItem({data}:listData){
        <StyledList className="list-item" data={data} />
     )
 }
+
+
+
