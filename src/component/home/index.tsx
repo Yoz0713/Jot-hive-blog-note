@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { getAllPost } from "../lib/getPost";
 import { GetServerSidePropsContext } from 'next';
 
-const listElement = ({className}:{className:string})=>{
+const ListElement = ({className}:{className:string})=>{
     const data = [{
         id:"1",
         title:"以MERN架構設計全端專案-EP1環境設置",
@@ -155,7 +155,7 @@ const listElement = ({className}:{className:string})=>{
 }
 
 
-const StyledList =styled(listElement)`
+const StyledList =styled(ListElement)`
     width:100%;
     .list-item{
         &:not(:last-child){
