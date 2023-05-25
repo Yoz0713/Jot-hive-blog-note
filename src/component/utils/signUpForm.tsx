@@ -1,27 +1,44 @@
 import styled from "styled-components";
 import Image from "next/image";
+import { checkEnvironment } from "../lib/checkEnvironment";
 import { useRouter } from "next/router";
+import { useState } from "react";
 const FormElement = ({className}:{className:string})=>{
-    const router = useRouter()
+    const router = useRouter();
+    const [username,setUsername] = useState("")
+    const [password,setPassword] = useState("")
+    let apiRoute = checkEnvironment("/user/signUp").api
+
+    const handleSignUp = (e:any)=>{
+        e.preventDefault();
+        console.log(1)
+        fetch(apiRoute,{
+            method:"POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+            },
+              mode:"cors",
+              body: JSON.stringify({
+                username:username,
+                password:password,
+              }),
+        })
+    }
     return(
         <>
-         <form action="post" className={className}>
+         <form action={apiRoute} method="post" className={className}>
               <Image src="/svg/login-hive.svg" alt={"jot-hive"} width={40} height={40}/>
                     <div className="form-box">
                         <label htmlFor="username">電子信箱: </label>
-                        <input type="text" id="username"/>
+                        <input type="text" id="username" onChange={(e)=>{setUsername(e.target.value)}}/>
                     </div>
                     <div className="form-box">
                         <label htmlFor="password">密碼:</label>
-                        <input type="text" id="password"/>
+                        <input type="text" id="password"  onChange={(e)=>{setPassword(e.target.value)}}/>
                     </div>
-                    <button type="submit" onClick={(e)=>{
-                        e.preventDefault()
-                    }}>登入</button>
+                    <button type="submit" onClick={handleSignUp}>註冊</button>
         </form>
-        <SignUpBox>
-            <p>還沒擁有JotHive帳號嗎?<span onClick={()=>{router.push("/signUp")}}>註冊</span></p>
-        </SignUpBox>
         </>
        
     )
@@ -71,7 +88,7 @@ border-radius:15px;
         }
     }
     button{
-        width:80%;
+        width:85%;
         height:9vw;
         background-color:${(props)=>props.theme.border};
         color:${(props)=>props.theme.color};
@@ -84,31 +101,13 @@ border-radius:15px;
         font-weight:900;
     }
 `
-const SignUpBox = styled.div`
-width:85%;
-margin:5vw auto 0;
-padding:6vw 3.5vw;
-background-color:${(props)=>props.theme.background};
-border-radius:15px;
-p{
-    width:fit-content;
-    margin:0 auto;
-    color:${(props)=>props.theme.color};
-    font-size:${(props)=>props.theme.sFontSize};
-    letter-spacing:0.1em;
-    span{
-        color:${(props)=>props.theme.border};
-        border-bottom:1px solid ${(props)=>props.theme.border};
-        margin-left:0.8vw;
-    }
-}
-`;
 
-export default function LoginForm ():JSX.Element{
+
+export default function SignUpForm ():JSX.Element{
     return(
       <>
           
-         <StyledElement className="login-form" />
+         <StyledElement className="signUp-form" />
       </>
      
     )

@@ -25,7 +25,7 @@ export const darkTheme = {
   ...fontFamily,
   background: '#333333',
   color: '#FFFFFF',
-  border:"#E5DC75",
+  border:"#D4AF37",
   headerHeight:"15vw",
   footerHeight:"18vw"
 };

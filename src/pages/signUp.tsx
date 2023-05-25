@@ -1,11 +1,11 @@
-import LoginForm from '@/component/utils/loginForm'
+import SignUpForm from '@/component/utils/signUpForm'
 import styled from "styled-components";
 
 
 const Element = ({className} : {className:string})=>{
     return(
-        <section id="login" className={className}>
-           <LoginForm/>
+        <section  className={className}>
+           <SignUpForm/>
         </section>
     )
 }
@@ -19,8 +19,8 @@ align-items:center;
     height:185vw;
   `;
   
-  export default function Login ():JSX.Element{
+  export default function SignUp ():JSX.Element{
       return(
-          <StyledElement className="loginPage" />
+          <StyledElement className="SignUp" />
       )
   }
