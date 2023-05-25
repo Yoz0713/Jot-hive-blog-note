@@ -3,7 +3,6 @@ import Image from 'next/image'
 import List from '@/component/home'
 
 export default function Home() {
-  console.log(process.env)
       // const result = async()=>{
       //     let response = await fetch("http://localhost:3030",{
       //       method:"GET"
