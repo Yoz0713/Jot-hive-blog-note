@@ -20,7 +20,6 @@
     "@types/react-dom": "18.0.11",
     "@types/react-redux": "^7.1.25",
     "@types/styled-components": "^5.1.26",
-    "bcrypt": "^5.1.0",
     "eslint": "8.38.0",
     "eslint-config-next": "13.3.0",
     "next": "13.3.0",
