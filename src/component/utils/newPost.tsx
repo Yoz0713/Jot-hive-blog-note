@@ -2,7 +2,7 @@ import styled from "styled-components"
 import { OutputData } from "@editorjs/editorjs";
 import dynamic from "next/dynamic";
 import { useState } from "react";
-
+import { checkEnvironment } from "../lib/checkEnvironment";
 // important that we use dynamic loading here
 // editorjs should only be rendered on the client side.
 const EditorBlock = dynamic(() => import("../editor/index"), {
@@ -13,10 +13,11 @@ const NewPostWrapperElement = ({className}:{className:string})=>{
     const [image, setImage] = useState<OutputData>();
     const [para, setPara] = useState<OutputData>();
     const [title, setTitle] = useState<OutputData>();
+    const apiRoute = checkEnvironment("/post").api
     const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         // 將編輯器數據作為請求主體中的一個屬性發送到後端
-        fetch("http://localhost:3030/post", {
+        fetch(apiRoute, {
           method: "POST",
           body: JSON.stringify({
             image:JSON.stringify(image),
