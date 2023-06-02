@@ -7,23 +7,37 @@ const FormElement = ({className}:{className:string})=>{
     const router = useRouter();
     const [username,setUsername] = useState("")
     const [password,setPassword] = useState("")
+    const [error,setError] = useState({isOpen:false,text:null})
     let apiRoute = checkEnvironment("/user/signUp").api
 
-    const handleSignUp = (e:any)=>{
+    const handleSignUp = async(e:any)=>{
         e.preventDefault();
-        console.log(1)
-        fetch(apiRoute,{
-            method:"POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Accept": "application/json",
-            },
-              mode:"cors",
-              body: JSON.stringify({
-                username:username,
-                password:password,
-              }),
-        })
+        try{
+            let signConsequence = await fetch(apiRoute,{
+                method:"POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json",
+                },
+                  mode:"cors",
+                  body: JSON.stringify({
+                    username:username,
+                    password:password,
+                  }),
+            })
+            let res = await signConsequence.json()
+            if(res.error){
+                setTimeout(()=>{
+                    setError({isOpen:false,text:res.error})
+                },950)
+                setError({isOpen:true,text:res.error})
+                
+            }
+        }catch(error){
+            console.log(error)
+        }
+        
+        
     }
     return(
         <>
@@ -39,6 +53,12 @@ const FormElement = ({className}:{className:string})=>{
                     </div>
                     <button type="submit" onClick={handleSignUp}>註冊</button>
         </form>
+        <Error style={error.isOpen ? {opacity:1,pointerEvents:"auto"}: {}}>
+            <div className="paraBox" style={error.isOpen ? {transform: "translateY(0)",opacity:1}: {}}>
+            <p >{error.text}</p>
+            </div>
+            
+        </Error>
         </>
        
     )
@@ -102,6 +122,43 @@ border-radius:15px;
     }
 `
 
+const Error = styled.div`
+display:flex;
+justify-content:center;
+align-items:center;
+    position:fixed;
+    top:0;
+    right:0;
+    bottom:0;
+    left:0;
+    margin:auto;
+    width:100%;
+    height:100%;
+    background-color:rgba(0,0,0,0.65);
+    pointer-events:none;
+    opacity:0;
+    transition:0.3s;
+    .paraBox{
+        width:70%;
+        transform:translateY(25px);
+        opacity:0;
+        transition:0.5s;
+        padding:15px 0;
+        border:2px solid #fff;
+        box-shadow:0 0 6px 0px #fff;
+        background-color:${(props)=>props.theme.border};
+        transition-delay:0.15s;
+        border-radius:15px;
+        p{
+            width:100%;
+            text-align:center;
+            color:${(props)=>props.theme.color};
+            font-size:${(props)=>props.theme.mlFontSize};
+            letter-spacing:0.1em;
+        }
+    }
+   
+`;
 
 export default function SignUpForm ():JSX.Element{
     return(
