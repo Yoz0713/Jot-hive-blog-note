@@ -1,11 +1,12 @@
 import LoginForm from '@/component/utils/loginForm'
 import styled from "styled-components";
-
+import GoogleLogin from "../component/utils/googleLogin"
 
 const Element = ({className} : {className:string})=>{
     return(
         <section id="login" className={className}>
            <LoginForm/>
+           <GoogleLogin/>
         </section>
     )
 }

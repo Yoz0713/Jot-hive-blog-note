@@ -84,7 +84,7 @@ border-radius:15px;
         font-weight:900;
     }
 `
-const SignUpBox = styled.div`
+ const SignUpBox = styled.div`
 width:85%;
 margin:5vw auto 0;
 padding:6vw 3.5vw;
