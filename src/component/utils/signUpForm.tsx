@@ -3,39 +3,62 @@ import Image from "next/image";
 import { checkEnvironment } from "../lib/checkEnvironment";
 import { useRouter } from "next/router";
 import { useState } from "react";
+import ErrorMessage from "../lib/errorMessage";
 const FormElement = ({className}:{className:string})=>{
     const router = useRouter();
     const [username,setUsername] = useState("")
     const [password,setPassword] = useState("")
-    const [error,setError] = useState({isOpen:false,text:null})
+    const [error,setError] = useState({isOpen:false,text:""})
     let apiRoute = checkEnvironment("/user/signUp").api
 
     const handleSignUp = async(e:any)=>{
         e.preventDefault();
-        try{
-            let signConsequence = await fetch(apiRoute,{
-                method:"POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Accept": "application/json",
-                },
-                  mode:"cors",
-                  body: JSON.stringify({
-                    username:username,
-                    password:password,
-                  }),
-            })
-            let res = await signConsequence.json()
-            if(res.error){
-                setTimeout(()=>{
-                    setError({isOpen:false,text:res.error})
-                },950)
-                setError({isOpen:true,text:res.error})
-                
+        if(username && password){
+            try{
+                let signConsequence = await fetch(apiRoute,{
+                    method:"POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Accept": "application/json",
+                    },
+                      mode:"cors",
+                      body: JSON.stringify({
+                        username:username,
+                        password:password,
+                      }),
+                })
+                let res = await signConsequence.json()
+                if(res.error){
+                    setTimeout(()=>{
+                        setError({isOpen:false,text:res.error})
+                    },950)
+                    setError({isOpen:true,text:res.error})
+                    
+                }else if(res.success){
+                    setTimeout(()=>{
+                        setError({isOpen:false,text:res.success})
+                        router.push("/")
+                    },950)
+                    setError({isOpen:true,text:res.success})
+                }
+            }catch(error){
+                console.log(error)
             }
-        }catch(error){
-            console.log(error)
+        }else{
+            if(username){
+                setTimeout(()=>{
+                    setError({isOpen:false,text:"請輸入密碼"})
+                },950)
+                setError({isOpen:true,text:"請輸入密碼"})
+            }else{
+                setTimeout(()=>{
+                    setError({isOpen:false,text:"請輸入帳號"})
+                },950)
+                setError({isOpen:true,text:"請輸入帳號"})
+            }
+            
         }
+       
         
         
     }
@@ -49,16 +72,11 @@ const FormElement = ({className}:{className:string})=>{
                     </div>
                     <div className="form-box">
                         <label htmlFor="password">密碼:</label>
-                        <input type="text" id="password"  onChange={(e)=>{setPassword(e.target.value)}}/>
+                        <input type="password" id="password"  onChange={(e)=>{setPassword(e.target.value)}}/>
                     </div>
                     <button type="submit" onClick={handleSignUp}>註冊</button>
         </form>
-        <Error style={error.isOpen ? {opacity:1,pointerEvents:"auto"}: {}}>
-            <div className="paraBox" style={error.isOpen ? {transform: "translateY(0)",opacity:1}: {}}>
-            <p >{error.text}</p>
-            </div>
-            
-        </Error>
+       <ErrorMessage state={error}/>
         </>
        
     )
