@@ -8,12 +8,13 @@ const FormElement = ({className}:{className:string})=>{
     const router = useRouter();
     const [username,setUsername] = useState("")
     const [password,setPassword] = useState("")
+    const [name , setName ] = useState("");
     const [error,setError] = useState({isOpen:false,text:""})
     let apiRoute = checkEnvironment("/user/signUp").api
 
     const handleSignUp = async(e:any)=>{
         e.preventDefault();
-        if(username && password){
+        if(username && password && name){
             try{
                 let signConsequence = await fetch(apiRoute,{
                     method:"POST",
@@ -23,6 +24,7 @@ const FormElement = ({className}:{className:string})=>{
                     },
                       mode:"cors",
                       body: JSON.stringify({
+                        name:name,
                         username:username,
                         password:password,
                       }),
@@ -67,6 +69,10 @@ const FormElement = ({className}:{className:string})=>{
          <form action={apiRoute} method="post" className={className}>
               <Image src="/svg/login-hive.svg" alt={"jot-hive"} width={40} height={40}/>
                     <div className="form-box">
+                        <label htmlFor="name">姓名:</label>
+                        <input type="text" id="name"  onChange={(e)=>{setName(e.target.value)}}/>
+                    </div>
+                    <div className="form-box">
                         <label htmlFor="username">電子信箱: </label>
                         <input type="text" id="username" onChange={(e)=>{setUsername(e.target.value)}}/>
                     </div>
@@ -74,6 +80,7 @@ const FormElement = ({className}:{className:string})=>{
                         <label htmlFor="password">密碼:</label>
                         <input type="password" id="password"  onChange={(e)=>{setPassword(e.target.value)}}/>
                     </div>
+                   
                     <button type="submit" onClick={handleSignUp}>註冊</button>
         </form>
        <ErrorMessage state={error}/>

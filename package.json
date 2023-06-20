@@ -29,6 +29,7 @@
     "typescript": "5.0.4"
   },
   "devDependencies": {
+    "@types/express-session": "^1.17.0",
     "next-svgr": "^0.0.2",
     "styled-components": "^5.3.9"
   }

@@ -21,6 +21,7 @@ const FormElement = ({className}:{className:string})=>{
                         "Content-Type": "application/json",
                         "Accept": "application/json",
                     },
+                    credentials:"include",
                       mode:"cors",
                       body: JSON.stringify({
                         username:username,
@@ -34,6 +35,7 @@ const FormElement = ({className}:{className:string})=>{
                     },950)
                     setError({isOpen:true,text:res.error})
                 }else if(res.success){
+                    console.log(res)
                     setTimeout(()=>{
                         setError({isOpen:false,text:res.success})
                         router.push("/")
