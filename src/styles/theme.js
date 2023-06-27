@@ -5,6 +5,7 @@ const fontSizeTheme={
   sFontSize:"1.15rem",
   mFontSize:"1.3rem",
   mlFontSize:"1.45rem",
+  lFontSize:"1.55rem",
   xlFontSize:"1.65rem",
 }
 const fontFamily = {

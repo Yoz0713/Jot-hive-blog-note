@@ -70,7 +70,7 @@ const FormElement = ({className}:{className:string})=>{
                     </div>
                     <div className="form-box">
                         <label htmlFor="password">密碼:</label>
-                        <input type="text" id="password" defaultValue={""}   onChange={(e)=>{setPassword(e.target.value)}}/>
+                        <input type="password" id="password" defaultValue={""}   onChange={(e)=>{setPassword(e.target.value)}}/>
                     </div>
                     <button type="submit" onClick={handleSubmit}>登入</button>
         </form>

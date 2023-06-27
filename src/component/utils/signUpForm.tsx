@@ -2,21 +2,24 @@ import styled from "styled-components";
 import Image from "next/image";
 import { checkEnvironment } from "../lib/checkEnvironment";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useState,useRef } from "react";
 import ErrorMessage from "../lib/errorMessage";
+
 const FormElement = ({className}:{className:string})=>{
-    const router = useRouter();
+  
     const [username,setUsername] = useState("")
     const [password,setPassword] = useState("")
     const [name , setName ] = useState("");
     const [error,setError] = useState({isOpen:false,text:""})
-    let apiRoute = checkEnvironment("/user/signUp").api
-
+    const checkPasswordRef = useRef<HTMLInputElement>(null)
+    let signUpRoute = checkEnvironment("/user/signUp").api
+    let registerRoute = checkEnvironment("/user/register").api
+    const [verifyCode , setVerifyCode ] = useState(false)
     const handleSignUp = async(e:any)=>{
         e.preventDefault();
-        if(username && password && name){
+        if(username && password && name &&(password == checkPasswordRef.current?.value)){
             try{
-                let signConsequence = await fetch(apiRoute,{
+                let signConsequence = await fetch(signUpRoute,{
                     method:"POST",
                     headers: {
                         "Content-Type": "application/json",
@@ -37,21 +40,31 @@ const FormElement = ({className}:{className:string})=>{
                     setError({isOpen:true,text:res.error})
                     
                 }else if(res.success){
-                    setTimeout(()=>{
-                        setError({isOpen:false,text:res.success})
-                        router.push("/")
-                    },950)
-                    setError({isOpen:true,text:res.success})
+                    setVerifyCode(true)
                 }
             }catch(error){
                 console.log(error)
             }
         }else{
             if(username){
-                setTimeout(()=>{
-                    setError({isOpen:false,text:"請輸入密碼"})
-                },950)
-                setError({isOpen:true,text:"請輸入密碼"})
+                if(password != checkPasswordRef.current?.value){
+                    setTimeout(()=>{
+                        setError({isOpen:false,text:"密碼不一致請重新確認"})
+                    },950)
+                    setError({isOpen:true,text:"密碼不一致請重新確認"})
+                }else if (name == ""){
+                    setTimeout(()=>{
+                        setError({isOpen:false,text:"請輸入姓名"})
+                    },950)
+                    setError({isOpen:true,text:"請輸入姓名"})
+
+                }else {
+                    setTimeout(()=>{
+                        setError({isOpen:false,text:"請輸入密碼"})
+                    },950)
+                    setError({isOpen:true,text:"請輸入密碼"})
+                }
+               
             }else{
                 setTimeout(()=>{
                     setError({isOpen:false,text:"請輸入帳號"})
@@ -66,7 +79,7 @@ const FormElement = ({className}:{className:string})=>{
     }
     return(
         <>
-         <form action={apiRoute} method="post" className={className}>
+         <form action={signUpRoute} method="post" className={className}>
               <Image src="/svg/login-hive.svg" alt={"jot-hive"} width={40} height={40}/>
                     <div className="form-box">
                         <label htmlFor="name">姓名:</label>
@@ -77,13 +90,18 @@ const FormElement = ({className}:{className:string})=>{
                         <input type="text" id="username" onChange={(e)=>{setUsername(e.target.value)}}/>
                     </div>
                     <div className="form-box">
-                        <label htmlFor="password">密碼:</label>
+                        <label htmlFor="password">用戶密碼:</label>
                         <input type="password" id="password"  onChange={(e)=>{setPassword(e.target.value)}}/>
                     </div>
-                   
+                    <div className="form-box">
+                        <label htmlFor="checkPassword">確認密碼:</label>
+                        <input type="password" id="checkPassword" ref={checkPasswordRef}/>
+                    </div>
                     <button type="submit" onClick={handleSignUp}>註冊</button>
         </form>
        <ErrorMessage state={error}/>
+       {verifyCode &&  <VerifyBox router={registerRoute} data={{username:username,password:password,name:name}}/>}
+       
         </>
        
     )
@@ -147,43 +165,112 @@ border-radius:15px;
     }
 `
 
-const Error = styled.div`
-display:flex;
-justify-content:center;
-align-items:center;
+const VerifyElement = styled.div`
+    display:flex;
+    align-items:center;
     position:fixed;
-    top:0;
-    right:0;
-    bottom:0;
-    left:0;
-    margin:auto;
     width:100%;
     height:100%;
-    background-color:rgba(0,0,0,0.65);
-    pointer-events:none;
-    opacity:0;
-    transition:0.3s;
-    .paraBox{
-        width:70%;
-        transform:translateY(25px);
-        opacity:0;
-        transition:0.5s;
-        padding:15px 0;
-        border:2px solid #fff;
-        box-shadow:0 0 6px 0px #fff;
-        background-color:${(props)=>props.theme.border};
-        transition-delay:0.15s;
-        border-radius:15px;
-        p{
+    z-index:20;
+    background-color:${(props)=>props.theme.background};
+    form{
+        position:relative;
+        top:0;
+        bottom:0;
+        left:0;
+        right:0;
+        margin:auto;
+        width:90%;
+        padding:25px 15px;
+        .form-box{
+            display:flex;
+            justify-content:space-between;
             width:100%;
-            text-align:center;
+            input{
+                text-align:center;
+                width:100%;
+                font-size:${(props)=>props.theme.lFontSize};
+                padding:3vw 0;
+                border:none;
+            }
+        }
+        
+        button{
+            position:relative;
+            left:0;
+            right:0;
+            margin:10vw auto 0;
+            display:flex;
+            justify-content:center;
+            width:25%;
+            padding:5px 0;
+            background-color:${(props)=>props.theme.border};
             color:${(props)=>props.theme.color};
-            font-size:${(props)=>props.theme.mlFontSize};
-            letter-spacing:0.1em;
+            font-size:${(props)=>props.theme.sFontSize};
+            border:none;
+            border:1px solid rgba(255,255,255,0.5);
+            border-radius:5px;
         }
     }
-   
-`;
+`
+function VerifyBox ({router,data}:{router:string,data:{username:string,name:string,password:string}}){
+    const [error,setError] = useState({isOpen:false,text:""})
+    const [verifyCode , setVerifyCode] = useState("")
+    const routers = useRouter();
+    return(
+        <>
+         <ErrorMessage state={error}/>
+        <VerifyElement>
+            <form action={router} method="POST">
+                <div className="form-box">
+                    <input type="number" min="0" max="9" placeholder="驗證碼" onChange={(e)=>{
+                        setVerifyCode(e.target.value)
+                    }}/>
+                </div>
+                <button type="submit" onClick={async (e)=>{
+                    e.preventDefault();
+                    try{
+                        let signConsequence = await fetch(router,{
+                            method:"POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                                "Accept": "application/json",
+                            },
+                              mode:"cors",
+                              body: JSON.stringify({
+                                name:data.name,
+                                username:data.username,
+                                password:data.password,
+                                verifyCode:verifyCode
+                              }),
+                        })
+                        let res = await signConsequence.json()
+                        console.log(res)
+                        if(res.error){
+                            setTimeout(()=>{
+                                setError({isOpen:false,text:res.error})
+                                routers.push("/signUp")
+                            },950)
+                            setError({isOpen:true,text:res.error})
+                            
+                        }else if(res.success){
+                            setTimeout(()=>{
+                                setError({isOpen:false,text:res.success})
+                                routers.push("/login")
+                            },950)
+                            setError({isOpen:true,text:res.success})
+                        }
+                    }catch(error){
+                        console.log(error)
+                    }
+                }}>驗證</button>
+            </form>
+        </VerifyElement>
+        </>
+       
+    )
+}
+
 
 export default function SignUpForm ():JSX.Element{
     return(
