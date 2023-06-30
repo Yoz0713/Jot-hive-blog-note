@@ -7,9 +7,9 @@ export async function checkLogin(){
           method:"GET",
           credentials:"include",
         }); // 發送請求到後端的路由 '/loginChecking'
-        const data = await response.text();
-        console.log(data)
-        if (data) {
+        const data = await response.json();
+  
+        if (data.status) {
             return true
         } else {
           // 使用者未登入，導向登入頁面
