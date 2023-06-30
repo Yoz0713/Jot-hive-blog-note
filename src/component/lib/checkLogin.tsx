@@ -7,7 +7,8 @@ export async function checkLogin(){
           method:"GET",
           credentials:"include",
         }); // 發送請求到後端的路由 '/loginChecking'
-        const data = await response.json();
+        const data = await response.text();
+        console.log(data)
         if (data) {
             return true
         } else {
